@@ -3,23 +3,22 @@ import numpy as np
 from scipy.sparse import csr_matrix
 from sklearn.neighbors import NearestNeighbors
 
-def main():
-    df_rating = pd.read_csv('rating.csv')
-    # Ignore rating=-1 (watched, but didn't rate)
-    df_rating = df_rating[df_rating.rating >= 0].drop_duplicates(['user_id','anime_id'], keep=False)
+# Global variables
 
-    # Make (anime, user-rating) matrix
-    # rating=0 if the user didn't watch the anime.
-    anime_user_mat = df_rating.pivot(index='anime_id',columns='user_id',values='rating').fillna(0)
-    # scipy sparse matrix
-    anime_user_csr = csr_matrix(anime_user_mat)
+df_rating = pd.read_csv('rating.csv')
+# Ignore rating=-1 (watched, but didn't rate)
+df_rating = df_rating[df_rating.rating >= 0].drop_duplicates(['user_id','anime_id'], keep=False)
 
-    # Train KNN model
-    neigh = NearestNeighbors(n_neighbors=9, algorithm='brute', metric='cosine')
-    model_knn = neigh.fit(anime_user_csr)
+# Make (anime, user-rating) matrix
+# rating=0 if the user didn't watch the anime.
+anime_user_mat = df_rating.pivot(index='anime_id',columns='user_id',values='rating').fillna(0)
+# scipy sparse matrix
+anime_user_csr = csr_matrix(anime_user_mat)
 
-    # TODO: input anime id
-    find_neighbors(27989)
+# Train KNN model
+neigh = NearestNeighbors(n_neighbors=9, algorithm='brute', metric='cosine')
+model_knn = neigh.fit(anime_user_csr)
+
 
 def find_neighbors(aid):
     # 近いアニメを探す
@@ -44,4 +43,5 @@ def anime_id_to_name(aid):
     return df_anime[df_anime.anime_id==aid].name.values[0]
 
 if __name__ == '__main__':
-    main()
+    # TODO: input anime id
+    find_neighbors(27989)
