@@ -47,5 +47,8 @@ def anime_index_to_id(ind):
 
 if __name__ == '__main__':
     while True:
-        anime_id = int(input('Enter anime id: '))
-        find_neighbors(anime_id)
+        try:
+            anime_id = int(input('Enter anime id: '))
+            find_neighbors(anime_id)
+        except ValueError:
+            print('Invalid input.')
