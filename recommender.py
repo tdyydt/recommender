@@ -37,6 +37,7 @@ def find_neighbors(aid):
         else:
             aid_neigh = anime_index_to_id(ind)
             print(f'{aid_neigh} => {anime_id_to_name(aid_neigh)}')
+    print()
 
 # anime_user行列のindex(行番号)に対応するanime_idを返す
 def anime_index_to_id(ind):

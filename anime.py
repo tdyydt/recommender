@@ -14,6 +14,7 @@ def find_anime_contains(query):
     for i, (_, row) in enumerate(df_narrowed.iterrows()):
         if i >= 10: break
         print(f"{row['anime_id']} => {row['name']}")
+    print()
 
 
 if __name__ == '__main__':
