@@ -10,7 +10,9 @@ def anime_id_to_name(aid):
 # queryをタイトルに含むようなアニメを探す
 def find_anime_contains(query):
     df_narrowed = df_anime[df_anime.name.str.contains(query, case=False)]
-    for _, row in df_narrowed.iterrows():
+    print(f'There are {len(df_narrowed)} results.')
+    for i, (_, row) in enumerate(df_narrowed.iterrows()):
+        if i >= 10: break
         print(f"{row['anime_id']} => {row['name']}")
 
 
