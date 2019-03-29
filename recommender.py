@@ -3,7 +3,9 @@ import numpy as np
 from scipy.sparse import csr_matrix
 from sklearn.neighbors import NearestNeighbors
 
-# Global variables
+from anime import anime_id_to_name
+
+# Global variables:
 
 df_rating = pd.read_csv('rating.csv')
 # Ignore rating=-1 (watched, but didn't rate)
@@ -19,13 +21,14 @@ anime_user_csr = csr_matrix(anime_user_mat)
 neigh = NearestNeighbors(n_neighbors=9, algorithm='brute', metric='cosine')
 model_knn = neigh.fit(anime_user_csr)
 
-# TODO: move this
-df_anime = pd.read_csv('anime.csv')
 
+# Given anime_id (aid), print relevant animes.
 def find_neighbors(aid):
     # 近いアニメを探す
     the_anime = anime_user_mat.loc[aid].values.reshape(1,-1)  # 2dにする必要あり
     xss, yss = model_knn.kneighbors(the_anime, n_neighbors=11)  # 距離/index
+
+    print(f'The users who like {anime_id_to_name(aid)} also like...')
 
     # loop over kneighbors
     for j, (dist, ind) in enumerate(zip(xss.flatten(), yss.flatten())):
@@ -33,17 +36,15 @@ def find_neighbors(aid):
         if j == 0: assert(anime_index_to_id(ind) == aid)
         else:
             aid_neigh = anime_index_to_id(ind)
-            print(aid_neigh, anime_id_to_name(aid_neigh))
+            print(f'{anime_id_to_name(aid_neigh)} ({aid_neigh})')
 
 # anime_user行列のindex(行番号)に対応するanime_idを返す
 def anime_index_to_id(ind):
     # ここではnameがanime_idに対応
     return anime_user_mat.iloc[ind].name
 
-# anime_idに対応する，アニメのタイトル(ローマ字)を返す
-def anime_id_to_name(aid):
-    return df_anime[df_anime.anime_id==aid].name.values[0]
 
 if __name__ == '__main__':
-    # TODO: input anime id
-    find_neighbors(27989)
+    while True:
+        anime_id = int(input())
+        find_neighbors(anime_id)
