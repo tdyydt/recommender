@@ -19,6 +19,8 @@ anime_user_csr = csr_matrix(anime_user_mat)
 neigh = NearestNeighbors(n_neighbors=9, algorithm='brute', metric='cosine')
 model_knn = neigh.fit(anime_user_csr)
 
+# TODO: move this
+df_anime = pd.read_csv('anime.csv')
 
 def find_neighbors(aid):
     # 近いアニメを探す
@@ -30,7 +32,7 @@ def find_neighbors(aid):
         # nearest anime should be itself
         if j == 0: assert(anime_index_to_id(ind) == aid)
         else:
-            aid_ngigh = anime_index_to_id(ind)
+            aid_neigh = anime_index_to_id(ind)
             print(aid_neigh, anime_id_to_name(aid_neigh))
 
 # anime_user行列のindex(行番号)に対応するanime_idを返す
