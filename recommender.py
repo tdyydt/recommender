@@ -28,7 +28,7 @@ def find_neighbors(aid):
     the_anime = anime_user_mat.loc[aid].values.reshape(1,-1)  # 2dにする必要あり
     xss, yss = model_knn.kneighbors(the_anime, n_neighbors=11)  # 距離/index
 
-    print(f'The users who like {anime_id_to_name(aid)} also like...')
+    print(f'The users who like "{anime_id_to_name(aid)}" also like...')
 
     # loop over kneighbors
     for j, (dist, ind) in enumerate(zip(xss.flatten(), yss.flatten())):
