@@ -16,5 +16,5 @@ def find_anime_contains(query):
 
 if __name__ == '__main__':
     while True:
-        query = input()
+        query = input('Enter query: ')
         find_anime_contains(query)
