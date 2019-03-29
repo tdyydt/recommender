@@ -14,6 +14,7 @@ from [Anime Recommendations Database](https://www.kaggle.com/CooperUnion/anime-r
   + Find the ids of animes that contain the given keyword in the title.
   + (This is meant to help you find anime ids.)
 
+Alternatively, see [sample.md](sample.md) for sample usage.
 
 ## Links
 
