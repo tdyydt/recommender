@@ -52,3 +52,5 @@ if __name__ == '__main__':
             find_neighbors(anime_id)
         except ValueError:
             print('Invalid input.')
+        except KeyError:
+            print('KeyError (e.g. the given id was not found)')
